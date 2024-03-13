@@ -39,17 +39,12 @@ public class Inventory {
 
         */
 
-        /** Example 2:  finding and process
-        
-        repository().findById(orderPlaced.get???()).ifPresent(inventory->{
-            
-            inventory // do something
-            repository().save(inventory);
-
-
-         });
-        */
-
+        repository()
+            .findById(Long.valueOf(orderPlaced.getProductId()))
+            .ifPresent(inventory -> {
+                inventory.setStock(inventory.getStock() - orderPlaced.getQty());
+                repository().save(inventory);
+            });
     }
 
     //>>> Clean Arch / Port Method
@@ -63,17 +58,12 @@ public class Inventory {
 
         */
 
-        /** Example 2:  finding and process
-        
-        repository().findById(orderCancelled.get???()).ifPresent(inventory->{
-            
-            inventory // do something
-            repository().save(inventory);
-
-
-         });
-        */
-
+        repository()
+            .findById(orderCancelled.getProductId())
+            .ifPresent(inventory -> {
+                inventory.setStock(inventory.getStock() + orderPlaced.getQty());
+                repository().save(inventory);
+            });
     }
     //>>> Clean Arch / Port Method
 
